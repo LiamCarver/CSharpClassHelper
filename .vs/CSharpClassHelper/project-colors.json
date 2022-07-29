@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "12fe86ba-3a47-4f84-8797-bb6864e6b714": {
+      "ProjectGuid": "12fe86ba-3a47-4f84-8797-bb6864e6b714",
+      "DisplayName": "ConsoleAppUsingGenerator",
+      "ColorIndex": 0
+    },
+    "ce912222-9119-4d42-a242-592e7cc8a04f": {
+      "ProjectGuid": "ce912222-9119-4d42-a242-592e7cc8a04f",
+      "DisplayName": "SourceGeneratorHelper",
+      "ColorIndex": 1
+    },
+    "5499aeaf-f856-4b03-b29c-13cb2492fa72": {
+      "ProjectGuid": "5499aeaf-f856-4b03-b29c-13cb2492fa72",
+      "DisplayName": "CSharpClassHelper",
+      "ColorIndex": 2
+    },
+    "fcb2367e-e17a-4d8c-b55e-730597bb5897": {
+      "ProjectGuid": "fcb2367e-e17a-4d8c-b55e-730597bb5897",
+      "DisplayName": "MyFirstGenerator",
+      "ColorIndex": 3
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "1b720893-ac28-445a-8a8e-06dc869a2c02": {
+      "ProjectGuid": "1b720893-ac28-445a-8a8e-06dc869a2c02",
+      "DisplayName": "SyntaxTreeExtensions",
+      "ColorIndex": 4
+    },
+    "d2f45496-bb52-4e82-b6cf-b265921c3c9b": {
+      "ProjectGuid": "d2f45496-bb52-4e82-b6cf-b265921c3c9b",
+      "DisplayName": "MyTargetClassLibrary",
+      "ColorIndex": 5
+    }
+  },
+  "NextColorIndex": 6
+}

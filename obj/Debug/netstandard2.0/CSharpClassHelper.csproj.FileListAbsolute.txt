@@ -1,0 +1,10 @@
+C:\Users\liamc\source\repos\CSharpClassHelper\bin\Debug\netstandard2.0\CSharpClassHelper.deps.json
+C:\Users\liamc\source\repos\CSharpClassHelper\bin\Debug\netstandard2.0\CSharpClassHelper.dll
+C:\Users\liamc\source\repos\CSharpClassHelper\bin\Debug\netstandard2.0\CSharpClassHelper.pdb
+C:\Users\liamc\source\repos\CSharpClassHelper\obj\Debug\netstandard2.0\CSharpClassHelper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\liamc\source\repos\CSharpClassHelper\obj\Debug\netstandard2.0\CSharpClassHelper.AssemblyInfoInputs.cache
+C:\Users\liamc\source\repos\CSharpClassHelper\obj\Debug\netstandard2.0\CSharpClassHelper.AssemblyInfo.cs
+C:\Users\liamc\source\repos\CSharpClassHelper\obj\Debug\netstandard2.0\CSharpClassHelper.csproj.CoreCompileInputs.cache
+C:\Users\liamc\source\repos\CSharpClassHelper\obj\Debug\netstandard2.0\CSharpClassHelper.dll
+C:\Users\liamc\source\repos\CSharpClassHelper\obj\Debug\netstandard2.0\CSharpClassHelper.pdb
+C:\Users\liamc\source\repos\CSharpClassHelper\obj\Debug\netstandard2.0\CSharpClassHelper.csproj.AssemblyReference.cache
