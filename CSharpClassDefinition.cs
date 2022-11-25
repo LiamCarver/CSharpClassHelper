@@ -55,14 +55,14 @@ namespace CSharpClassHelper
 
     public class CSharpClassDefinition
     {
-        public IEnumerable<string> UsingStatements { get; set; }
+        public IEnumerable<string> UsingStatements { get; set; } = new List<string>();
         public string Namespace { get; set; }
-        public IEnumerable<string> ClassKeyWords { get; set; }
+        public IEnumerable<string> ClassKeyWords { get; set; } = new List<string>();
         public string Name { get; set; }
         public IEnumerable<CSharpProperty> Properties { get; set; }
         public List<CSharpMethod> Methods { get; set; }
         public string Implementations { get; set; }
-        public IEnumerable<CSharpAttribute> Attributes { get; set; }
+        public IEnumerable<CSharpAttribute> Attributes { get; set; } = new List<CSharpAttribute>();
         public bool IsInterface { get; set; }
         public List<CSharpClassDefinition> InnerClasses { get; set; }
         public bool IsInnerClass { get; set; }
