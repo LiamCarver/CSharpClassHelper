@@ -64,17 +64,18 @@ namespace CSharpClassHelper
         public string Implementations { get; set; }
         public IEnumerable<CSharpAttribute> Attributes { get; set; }
         public bool IsInterface { get; set; }
+        public List<CSharpClassDefinition> InnerClasses { get; set; }
+        public bool IsInnerClass { get; set; }
 
-        public override string ToString()
+        public string ToString(int startingTabCount = 0)
         {
             var stringBuilder = new StringBuilder();
-            var tabCount = 0;
+            var tabCount = startingTabCount;
 
             AddUsingStatements(stringBuilder);
             AddNamespace(stringBuilder);
 
-            // namespace code block
-            stringBuilder.AddCodeBlock(ref tabCount, () =>
+            Action mainCodeBlock = () =>
             {
                 AddClassAttributes(stringBuilder, tabCount);
                 AddClassName(stringBuilder, tabCount);
@@ -82,16 +83,40 @@ namespace CSharpClassHelper
                 // class code block
                 stringBuilder.AddCodeBlock(ref tabCount, () =>
                 {
+                    AddInnerClasses(stringBuilder, tabCount);
                     AddProperties(stringBuilder, tabCount);
                     AddMethods(stringBuilder, tabCount);
                 });
 
-            });
+            };
+
+            if (IsInnerClass)
+            {
+                mainCodeBlock();
+            }
+            else
+            {
+                // namespace code block
+                stringBuilder.AddCodeBlock(ref tabCount, mainCodeBlock);
+            }
 
             return stringBuilder.ToString();
         }
 
         #region ToString Helper Methods
+
+        private void AddInnerClasses(StringBuilder stringBuilder, int tabCount)
+        {
+            if (InnerClasses != null)
+            {
+                stringBuilder.AppendLine();
+                foreach (var innerClass in InnerClasses)
+                {
+                    stringBuilder.AppendLine(innerClass.ToString(tabCount));
+                }
+                stringBuilder.AppendLine();
+            }
+        }
 
         private void AddClassAttributes(StringBuilder stringBuilder, int tabCount)
         {
@@ -103,12 +128,18 @@ namespace CSharpClassHelper
 
         private void AddNamespace(StringBuilder stringBuilder)
         {
-            stringBuilder.AppendLine($"{CSharpKeyWords.Namespace}{CSharpSyntax.Space}{Namespace}");
+            if (!IsInnerClass)
+            {
+                stringBuilder.AppendLine($"{CSharpKeyWords.Namespace}{CSharpSyntax.Space}{Namespace}");
+            }
         }
 
         private void AddUsingStatements(StringBuilder stringBuilder)
         {
-            stringBuilder.AppendLine(CSharpSyntax.AutoGenerationComment);
+            if (!IsInnerClass)
+            {
+                stringBuilder.AppendLine(CSharpSyntax.AutoGenerationComment);
+            }
             stringBuilder.AppendLine(string.Join(Environment.NewLine, UsingStatements.Select(statement => $"{CSharpKeyWords.Using}{CSharpSyntax.Space}{statement}{CSharpSyntax.StatementTerminator}")));
             stringBuilder.AppendLine();
         }
@@ -177,7 +208,9 @@ namespace CSharpClassHelper
                 baseConstructorDetails = $" : base({string.Join(",", method.BaseConstructorArguments)})";
             }
 
-            stringBuilder.AppendLine($"{methodHeader}{CSharpSyntax.OpenBracket}{parameterDetails}{CSharpSyntax.CloseBracket}{baseConstructorDetails}", tabCount);
+            var methodHeaderEnding = IsInterface ? CSharpSyntax.StatementTerminator : string.Empty;
+
+            stringBuilder.AppendLine($"{methodHeader}{CSharpSyntax.OpenBracket}{parameterDetails}{CSharpSyntax.CloseBracket}{baseConstructorDetails}{methodHeaderEnding}", tabCount);
         }
 
         private void AddMethodLines(CSharpMethod method, StringBuilder stringBuilder, int tabCount)
@@ -203,10 +236,14 @@ namespace CSharpClassHelper
                 AddMethodAttributes(method, stringBuilder, tabCount);
                 AddMethodHeader(method, stringBuilder, tabCount);
 
-                stringBuilder.AddCodeBlock(ref tabCount, () =>
+                if (!IsInterface)
                 {
-                    AddMethodLines(method, stringBuilder, tabCount);
-                });
+                    stringBuilder.AddCodeBlock(ref tabCount, () =>
+                    {
+                        AddMethodLines(method, stringBuilder, tabCount);
+                    });
+                }
+
                 stringBuilder.AppendLine();
             }
         }
