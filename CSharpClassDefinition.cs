@@ -49,7 +49,7 @@ namespace CSharpClassHelper
         public IEnumerable<CSharpParameter> Parameters { get; set; }
         public IEnumerable<string> MethodLines { get; set; }
         public string ReturnType { get; set; }
-        public IEnumerable<string> Attributes { get; set; }
+        public IEnumerable<CSharpAttribute> Attributes { get; set; }
         public IEnumerable<string> BaseConstructorArguments { get; set; }
     }
 
@@ -194,7 +194,7 @@ namespace CSharpClassHelper
 
             foreach (var attribute in method.Attributes)
             {
-                stringBuilder.AppendLine(attribute, tabCount);
+                stringBuilder.AppendLine(attribute.ToString(), tabCount);
             }
         }
 
@@ -297,7 +297,11 @@ namespace CSharpClassHelper
                     Name = x.Identifier.ToString(),
                     Parameters = x.ParameterList.Parameters.Select(y => new CSharpParameter { Name = y.Identifier.ToString(), Type = y.Type.ToString() }),
                     ReturnType = x.ReturnType.ToString(),
-                    Attributes = x.AttributeLists.Select(y => y.ToString()).ToList(),
+                    Attributes = x.AttributeLists.Select(y => y.Attributes).SelectMany(y => y).Select(y => new CSharpAttribute
+                    {
+                        Name = y.Name.ToString(),
+                        Arguments = y.ArgumentList?.Arguments.Select(z => z.ToString().Replace("\"", string.Empty)).ToArray()
+                    }),
                     MethodKeyWords = new List<string> { CSharpKeyWords.Public },
                     MethodLines = new List<string> { },
                 }).ToList();
