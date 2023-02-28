@@ -36,6 +36,12 @@ namespace CSharpClassHelper
         public bool IsExtensionParameter { get; set; }
     }
 
+    public class CSharpConstant : CSharpVariable
+    {
+        public string Access { get; set; }
+        public string Value { get; set; }
+    }
+
     public class CSharpVariable
     {
         public string Name { get; set; }
@@ -47,7 +53,7 @@ namespace CSharpClassHelper
         public IEnumerable<string> MethodKeyWords { get; set; }
         public string Name { get; set; }
         public IEnumerable<CSharpParameter> Parameters { get; set; }
-        public IEnumerable<string> MethodLines { get; set; }
+        public IEnumerable<string> MethodLines { get; set; } = new List<string>();
         public string ReturnType { get; set; }
         public IEnumerable<CSharpAttribute> Attributes { get; set; }
         public IEnumerable<string> BaseConstructorArguments { get; set; }
@@ -60,6 +66,7 @@ namespace CSharpClassHelper
         public IEnumerable<string> ClassKeyWords { get; set; } = new List<string>();
         public string Name { get; set; }
         public IEnumerable<CSharpProperty> Properties { get; set; }
+        public IEnumerable<CSharpConstant> Constants { get; set; }
         public List<CSharpMethod> Methods { get; set; }
         public string Implementations { get; set; }
         public IEnumerable<CSharpAttribute> Attributes { get; set; } = new List<CSharpAttribute>();
@@ -84,6 +91,7 @@ namespace CSharpClassHelper
                 stringBuilder.AddCodeBlock(ref tabCount, () =>
                 {
                     AddInnerClasses(stringBuilder, tabCount);
+                    AddConstants(stringBuilder, tabCount);
                     AddProperties(stringBuilder, tabCount);
                     AddMethods(stringBuilder, tabCount);
                 });
@@ -109,12 +117,10 @@ namespace CSharpClassHelper
         {
             if (InnerClasses != null)
             {
-                stringBuilder.AppendLine();
                 foreach (var innerClass in InnerClasses)
                 {
                     stringBuilder.AppendLine(innerClass.ToString(tabCount));
                 }
-                stringBuilder.AppendLine();
             }
         }
 
@@ -128,7 +134,11 @@ namespace CSharpClassHelper
 
         private void AddNamespace(StringBuilder stringBuilder)
         {
-            if (!IsInnerClass)
+            if (IsInnerClass)
+            {
+                stringBuilder.AppendLine();
+            }
+            else
             {
                 stringBuilder.AppendLine($"{CSharpKeyWords.Namespace}{CSharpSyntax.Space}{Namespace}");
             }
@@ -139,9 +149,14 @@ namespace CSharpClassHelper
             if (!IsInnerClass)
             {
                 stringBuilder.AppendLine(CSharpSyntax.AutoGenerationComment);
+                stringBuilder.AppendLine();
             }
-            stringBuilder.AppendLine(string.Join(Environment.NewLine, UsingStatements.Select(statement => $"{CSharpKeyWords.Using}{CSharpSyntax.Space}{statement}{CSharpSyntax.StatementTerminator}")));
-            stringBuilder.AppendLine();
+
+            if (UsingStatements.Any())
+            {
+                stringBuilder.AppendLine(string.Join(Environment.NewLine, UsingStatements.Select(statement => $"{CSharpKeyWords.Using}{CSharpSyntax.Space}{statement}{CSharpSyntax.StatementTerminator}")));
+                stringBuilder.AppendLine();
+            }
         }
 
         private void AddClassName(StringBuilder stringBuilder, int tabCount)
@@ -182,6 +197,19 @@ namespace CSharpClassHelper
             foreach (var property in propertyDetails)
             {
                 stringBuilder.AppendLine(property, tabCount);
+            }
+        }
+
+        private void AddConstants(StringBuilder stringBuilder, int tabCount)
+        {
+            if (Constants == null || !Constants.Any())
+            {
+                return;
+            }
+
+            foreach (var constant in Constants)
+            {
+                stringBuilder.AppendLine($"{constant.Access} {CSharpKeyWords.Constant} {constant.Type} {constant.Name} = {constant.Value}{CSharpSyntax.StatementTerminator}", tabCount);
             }
         }
 
@@ -308,6 +336,13 @@ namespace CSharpClassHelper
         }
     }
 
+    public static class CSharpTypes
+    {
+        public const string String = "string";
+        public const string Int = "int";
+        public const string Boolean = "bool";
+    }
+
     public static class CSharpKeyWords
     {
         public const string Public = "public";
@@ -326,6 +361,7 @@ namespace CSharpClassHelper
         public const string Set = "set";
         public const string Void = "void";
         public const string Async = "async";
+        public const string Constant = "const";
     }
 
     public static class CSharpSyntax
@@ -344,6 +380,14 @@ namespace CSharpClassHelper
         public const string OpenAngleBracket = "<";
         public const string CloseAngleBracket = ">";
         public const string Colon = ":";
+    }
+
+    public static class CSharpHelper
+    {
+        public static string AddQuotes(string s)
+        {
+            return $"\"{s}\"";
+        }
     }
 
     public static class StringBuilderExtensions
