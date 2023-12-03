@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "in1mKBg4xjo3xNeQ+/aUnIMawl37JYqrjZ+kqt6pbGYSjVKqF44UD5MUjNP886/EiTaKOfyLTIWFpovk2MDq7w==",
+  "dgSpecHash": "RWX898pB3GerHIR1yC/bs4NuWaqvCaDqNqjix4edLeBn79Zi/WT7pnPZCkxPC9n/wHzACgV8Drosr2LTn+GC7A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\liamc\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj",
+  "projectFilePath": "C:\\Users\\liam.carver\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\liam.carver\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.2\\microsoft.codeanalysis.analyzers.3.3.2.nupkg.sha512",
     "C:\\Users\\liam.carver\\.nuget\\packages\\microsoft.codeanalysis.common\\4.0.1\\microsoft.codeanalysis.common.4.0.1.nupkg.sha512",

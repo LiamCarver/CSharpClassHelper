@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\liamc\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj": {}
+    "C:\\Users\\liam.carver\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj": {}
   },
   "projects": {
-    "C:\\Users\\liamc\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj": {
+    "C:\\Users\\liam.carver\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\liamc\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj",
+        "projectUniqueName": "C:\\Users\\liam.carver\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj",
         "projectName": "CSharpClassHelper",
-        "projectPath": "C:\\Users\\liamc\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj",
+        "projectPath": "C:\\Users\\liam.carver\\source\\repos\\CSharpClassHelper\\CSharpClassHelper.csproj",
         "packagesPath": "C:\\Users\\liam.carver\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\liamc\\source\\repos\\CSharpClassHelper\\obj\\",
+        "outputPath": "C:\\Users\\liam.carver\\source\\repos\\CSharpClassHelper\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\liam.carver\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -57,11 +57,12 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.107\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
