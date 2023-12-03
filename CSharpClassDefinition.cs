@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -276,12 +277,22 @@ namespace CSharpClassHelper
             }
         }
 
+        public static CSharpClassDefinition CreateFromSyntaxTree(SyntaxTree syntaxTree)
+        {
+            var root = syntaxTree.GetRoot();
+            var usingDirectives = root.DescendantNodes().OfType<UsingDirectiveSyntax>();
+            var usingStatements = usingDirectives.Select(usingDirective => usingDirective.Name.ToString());
+            var typeDeclarationSyntax = root.DescendantNodes().OfType<TypeDeclarationSyntax>().First();
+            var namespaceDeclaration = root.DescendantNodes().OfType<NamespaceDeclarationSyntax>().First();
+
+            return CreateFromTypeDeclarationSyntax(typeDeclarationSyntax, usingStatements, namespaceDeclaration.Name.ToString());
+        }
+
         #endregion
 
-        public static CSharpClassDefinition CreateFromTypeDeclarationSyntax(TypeDeclarationSyntax typeDeclarationSyntax, IEnumerable<string> usingStatements)
+        private static CSharpClassDefinition CreateFromTypeDeclarationSyntax(TypeDeclarationSyntax typeDeclarationSyntax, IEnumerable<string> usingStatements, string namespaceName)
         {
             var newUsingStatements = usingStatements.ToList();
-            newUsingStatements.Add(((NamespaceDeclarationSyntax)typeDeclarationSyntax.Parent).Name.ToString());
 
             var attributeSyntaxes = typeDeclarationSyntax.AttributeLists.Select(x => x.Attributes).SelectMany(x => x).ToList();
 
@@ -296,7 +307,7 @@ namespace CSharpClassHelper
                 UsingStatements = newUsingStatements,
                 Implementations = typeDeclarationSyntax.BaseList == null ? null : string.Join(CSharpSyntax.Comma, typeDeclarationSyntax.BaseList?.Types.Select(x => x.ToString())),
                 Name = typeDeclarationSyntax.Identifier.ToString(),
-                Namespace = string.Empty,
+                Namespace = namespaceName,
                 ClassKeyWords = new List<string> { CSharpKeyWords.Public },
                 Attributes = attributes,
                 Methods = GetCSharpMethods(typeDeclarationSyntax),
